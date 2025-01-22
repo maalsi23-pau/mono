@@ -134,5 +134,6 @@ jobs:
           retention-days: 3
 
       - name: Clean Builder Backend Docker
+        if: always()
         working-directory: backend
         run: docker compose -f docker-compose-build.yml down
