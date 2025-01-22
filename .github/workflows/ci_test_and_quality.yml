@@ -71,3 +71,20 @@ jobs:
           name: coverage-repport
           path: backend/coverage
           retention-days: 3 
+
+  Frontend:
+    needs: [Backend]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Start Builded Backend
+        working-directory: backend
+        run: |
+          docker compose -f docker-compose-build.yml up -d
+          docker ps -a
