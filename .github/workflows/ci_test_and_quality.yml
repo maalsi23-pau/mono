@@ -59,7 +59,8 @@ jobs:
         run: npm run initbdd
 
       - name: Populate BDD
-        run: npm run populate
+        run: |
+          mysql -u root -ptoor --host 127.0.0.1 --port 3306 --database test < ./test/insert_test_user.sql
 
       - name: Run all Test And Coverage
         run: npm run test:cov
