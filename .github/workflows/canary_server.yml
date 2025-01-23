@@ -4,7 +4,7 @@ on:
   workflow_call
 
 jobs:
-  create_vm:
+  create_vm_up_compose:
     runs-on: ubuntu-latest
     env:
       ResourceGroupName: "maalsi23-mono"
@@ -39,12 +39,7 @@ jobs:
             #!/bin/bash
             az vm show -d -g ${{ env.ResourceGroupName }} -n Canary --query publicIps -o tsv
             echo "AZURE_VM_IP=$(az vm show -d -g ${{ env.ResourceGroupName }} -n Canary --query publicIps -o tsv)" >> $GITHUB_ENV
-    
-  deploy_compose:
-    needs: [create_vm]
-    runs-on: ubuntu-latest
-    
-    steps:
+
       - name: Checkout
         uses: actions/checkout@v3
       
@@ -58,14 +53,6 @@ jobs:
 
           source: "./docker-compose-global.yml"
           target: "."
-
-  compose_up:
-    needs: [deploy_compose]
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       
       - name: Send compose file
         uses: appleboy/ssh-action@v1.0.3
