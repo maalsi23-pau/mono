@@ -1,0 +1,42 @@
+services:
+  total_bdd:
+    container_name: total_mariadb
+    image: mariadb:latest
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: TOOR
+      MARIADB_DATABASE: bddname
+      MARIADB_USER: roger
+      MARIADB_PASSWORD: regor
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+
+  total_back:
+    container_name: total_back
+    image: ghcr.io/maalsi23-pau/maalsi23-backend:latest
+    depends_on:
+      total_bdd:
+        condition: service_healthy
+    environment:
+      BDD_HOST: total_bdd
+    ports:
+      - 12000:12000
+
+  total_front:
+    container_name: total_front
+    image: ghcr.io/maalsi23-pau/maalsi23-frontend:latest
+    depends_on:
+      total_bdd:
+        condition: service_healthy
+    ports:
+      - 80:80
+
+  total_adminer:
+    container_name: total_adminer
+    image: adminer
+    ports:
+      - 8080:8080
