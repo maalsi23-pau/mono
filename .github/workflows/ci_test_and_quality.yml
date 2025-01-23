@@ -178,7 +178,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
   
   QualityFront:
-    # needs: [Backend, Frontend]
+    needs: [Backend, Frontend]
     runs-on: ubuntu-latest
     defaults:
       run:
