@@ -1,0 +1,36 @@
+name: Github Package
+
+on:
+  workflow_call
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Registry Login ${{ env.REGISTRY }}
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+
+      - name: Check Data
+        run: |
+          echo ${{ env.REGISTRY }}
+          echo ${{ env.IMAGE_NAME }}
+          echo ${{ github.actor }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v4
+        with:
+          context: backend
+          push: true
+          tags: ghcr.io/floriansp40/demo-backend:latest
