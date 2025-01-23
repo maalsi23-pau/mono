@@ -33,4 +33,4 @@ jobs:
         with:
           context: backend
           push: true
-          tags: ghcr.io/floriansp40/demo-backend:latest
+          tags: ghcr.io/maalsi23-pau/maalsi23-backend:latest
