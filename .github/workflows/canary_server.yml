@@ -82,6 +82,6 @@ jobs:
           password: ${{secrets.AZURE_VM_PASSWORD}}
 
           script: |
-            docker pull ghcr.io/maalsi23-pau/maalsi23-backend:latest
-            docker pull ghcr.io/maalsi23-pau/maalsi23-frontend:latest
-            docker-compose -f docker-compose-global.yml up -d
+            sudo docker pull ghcr.io/maalsi23-pau/maalsi23-backend:latest
+            sudo docker pull ghcr.io/maalsi23-pau/maalsi23-frontend:latest
+            sudo docker-compose -f docker-compose-global.yml up -d
