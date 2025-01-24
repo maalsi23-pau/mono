@@ -45,7 +45,7 @@ jobs:
 
       - name: Get Install DOcker SH Script
         run: |
-          curl -o $PWD/install_docker.sh https://raw.githubusercontent.com/azure-custom-cli/scripts/refs/heads/main/install_docker.sh
+          curl -o $PWD/install_docker.sh https://raw.githubusercontent.com/azure-custom-cli/scripts/refs/heads/main/install_docker_ubuntu.sh
           ls -al
 
       - name: Install DOcker on serveur
@@ -56,7 +56,7 @@ jobs:
           username: ${{secrets.AZURE_VM_LOGIN}}
           password: ${{secrets.AZURE_VM_PASSWORD}}
           script: |
-            curl -o install_docker.sh https://raw.githubusercontent.com/azure-custom-cli/scripts/refs/heads/main/install_docker.sh
+            curl -o install_docker.sh https://raw.githubusercontent.com/azure-custom-cli/scripts/refs/heads/main/install_docker_ubuntu.sh
             chmod +x install_docker.sh
             ls -al
             ./install_docker.sh
